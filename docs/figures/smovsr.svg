@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="263" viewBox="0 0 900 263" role="img" aria-labelledby="title" font-family="DejaVu Sans, sans-serif">
+  <title id="title">SMoVSR · два прохода по клипу</title>
+  <defs>
+    <marker id="tip" viewBox="0 0 8 8" refX="8" refY="4" orient="auto" markerWidth="5" markerHeight="5">
+      <path d="M0 0L8 4L0 8Z" fill="#5a6f7b" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="900" height="263" rx="12" fill="#fcfdfc" />
+  <rect x="22" y="16" width="34" height="27" rx="5" fill="#182d3c" />
+  <text x="39" y="35" fill="#ffffff" font-size="14" text-anchor="middle" font-weight="700">01</text>
+  <text x="69" y="36" fill="#182d3c" font-size="21" text-anchor="start" font-weight="700">SMoVSR · два прохода по клипу</text>
+  <text x="878" y="34" fill="#495f6c" font-size="13" text-anchor="end" font-weight="400">ПРОСТРАНСТВО  /  ВРЕМЯ</text>
+  <path d="M22 55H878" stroke="#cfdbde" />
+  <rect x="22" y="75" width="100" height="50" rx="8" fill="#f0f4f6" stroke="#becdd0" />
+  <text x="72.0" y="98" fill="#182d3c" font-size="15" text-anchor="middle" font-weight="700">Клип</text>
+  <text x="72.0" y="116" fill="#495f6c" font-size="13" text-anchor="middle" font-weight="400">T · RGB</text>
+  <rect x="151" y="75" width="142" height="50" rx="8" fill="#f0f4f6" stroke="#becdd0" />
+  <text x="222.0" y="98" fill="#182d3c" font-size="15" text-anchor="middle" font-weight="700">Признаки</text>
+  <text x="222.0" y="116" fill="#495f6c" font-size="13" text-anchor="middle" font-weight="400">SMB × 2</text>
+  <rect x="335" y="75" width="157" height="50" rx="8" fill="#ddf2ed" stroke="#becdd0" />
+  <text x="413.5" y="98" fill="#182d3c" font-size="15" text-anchor="middle" font-weight="700">Прямой</text>
+  <text x="413.5" y="116" fill="#495f6c" font-size="13" text-anchor="middle" font-weight="400">FSMoSR · 1 → T</text>
+  <rect x="335" y="156" width="157" height="50" rx="8" fill="#f0f4f6" stroke="#becdd0" />
+  <text x="413.5" y="179" fill="#182d3c" font-size="15" text-anchor="middle" font-weight="700">Слияние</text>
+  <text x="413.5" y="197" fill="#495f6c" font-size="13" text-anchor="middle" font-weight="400">concat → 1×1</text>
+  <rect x="539" y="156" width="182" height="50" rx="8" fill="#faebd2" stroke="#becdd0" />
+  <text x="630.0" y="179" fill="#182d3c" font-size="15" text-anchor="middle" font-weight="700">Обратный</text>
+  <text x="630.0" y="197" fill="#495f6c" font-size="13" text-anchor="middle" font-weight="400">FSMoSR · T → 1</text>
+  <rect x="539" y="75" width="182" height="50" rx="8" fill="#f0f4f6" stroke="#becdd0" />
+  <text x="630.0" y="98" fill="#182d3c" font-size="15" text-anchor="middle" font-weight="700">Реконструкция</text>
+  <text x="630.0" y="116" fill="#495f6c" font-size="13" text-anchor="middle" font-weight="400">concat → SR-голова</text>
+  <path d="M122 100H151" fill="none" stroke="#5a6f7b" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#tip)" />
+  <path d="M293 100H335" fill="none" stroke="#5a6f7b" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#tip)" />
+  <path d="M222 125V181H335" fill="none" stroke="#5a6f7b" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#tip)" />
+  <path d="M414 125V156" fill="none" stroke="#5a6f7b" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#tip)" />
+  <path d="M492 181H539" fill="none" stroke="#5a6f7b" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#tip)" />
+  <path d="M492 100H539" fill="none" stroke="#5a6f7b" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#tip)" />
+  <path d="M630 156V125" fill="none" stroke="#5a6f7b" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#tip)" />
+  <path d="M721 100H780" fill="none" stroke="#5a6f7b" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#tip)" />
+  <circle cx="793" cy="100" r="13" fill="#fff" stroke="#5a6f7b" />
+  <text x="793" y="106" fill="#182d3c" font-size="19" text-anchor="middle" font-weight="400">+</text>
+  <path d="M806 100H832" fill="none" stroke="#5a6f7b" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#tip)" />
+  <text x="856" y="105" fill="#182d3c" font-size="15" text-anchor="middle" font-weight="700">HR</text>
+  <path d="M72 125V237H793V113" fill="none" stroke="#5a6f7b" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#tip)" stroke-dasharray="5 4" />
+  <text x="415" y="231" fill="#495f6c" font-size="13" text-anchor="middle" font-weight="400">Билинейная база · ×s</text>
+</svg>

@@ -1,25 +1,25 @@
 # SMoVSR
 
-SMoVSR повышает пространственное разрешение каждого кадра видео, сохраняя длину клипа. Детали восстанавливаются по соседним кадрам в обоих направлениях, а базовое изображение получается билинейным увеличением входа. Поэтому для результата в начале клипа нужен и его конец: модель не каузальная.
+SMoVSR increases the resolution of every frame in an RGB video clip without changing its frame count. It predicts a correction to a bilinearly upscaled frame using information from both earlier and later frames. Even the first output frame can depend on the last input frame, so the model is not causal.
 
-## От клипа к кадрам высокого разрешения
+## From low-resolution clip to high-resolution frames
 
-![Граф SMoVSR: покадровые признаки поступают в прямой проход, затем вместе с его результатом — в обратный. Голова объединяет оба выхода и добавляет поправку к билинейной базе.](docs/figures/smovsr.svg)
+![SMoVSR architecture: frame features feed the forward pass. The backward pass uses both those features and the forward output. The reconstruction head combines both passes and adds its prediction to the bilinear baseline.](docs/figures/smovsr.svg)
 
-Для RGB-входа формы `B × T × 3 × H × W` выход имеет форму `B × T × 3 × sH × sW`. По умолчанию `s = 2`, ширина признаков `dim = 32`. Два блока `SMB` извлекают признаки каждого кадра на исходной сетке. Прямой `FSMoSR` читает клип от первого кадра к последнему; обратный имеет **свои веса** и на каждом шаге получает не только признаки кадра, но и выход прямого прохода для этого же момента.
+An RGB clip of shape `B × T × 3 × H × W` produces `B × T × 3 × sH × sW`. The default scale factor is `s = 2`, with `dim = 32` feature channels. Two `SMB` blocks extract features independently from each frame at the input resolution. The forward `FSMoSR` reads the clip from first frame to last. The backward `FSMoSR` has its own weights: at each frame, a `1×1` convolution combines the frame features with the matching forward output.
 
-Оба выхода конкатенируются по каналам. Голова `1×1 → PReLU → 3×3 → PixelShuffle` превращает их в RGB-поправку (при `s = 1` перестановка пикселей не нужна). Поправка прибавляется к билинейной базе, а не заменяет её.
+The reconstruction head concatenates the two directional outputs along the channel axis. A `1×1` convolution, `PReLU`, and a `3×3` convolution predict the subpixels; `PixelShuffle` rearranges them into a high-resolution RGB residual. At `s = 1`, no rearrangement is needed. The residual is added to the bilinear baseline.
 
-## Что переносится между кадрами
+## What passes between frames?
 
-![Шаг FSMoSR: выровненная память складывается со входом, три SMB вычисляют новые признаки. Одна ветвь формирует выход, другая обновляет память через обучаемый затвор.](docs/figures/fsmosr.svg)
+![One FSMoSR step: three SMB blocks process the sum of the current input and aligned state. Separate branches produce the frame features and the gated state passed to the next step.](docs/figures/fsmosr.svg)
 
-- **Выход и память различны.** Для входа шага `x` и выровненной памяти `a` три блока `SMB` вычисляют `f = blocks(x + a)`. Выход шага строится из `f + x`. В соседний кадр передаётся не этот выход, а смесь `a + z ⊙ (f − a)`, где `z = sigmoid(Conv1×1(cat(x, a)))`. На первом шаге каждого направления истории нет: `f = blocks(x)`, и `f` инициализирует память.
-- **Выравнивание без явного оптического потока.** По умолчанию память фильтруется поканальной свёрткой `7×7`. При `align_kernel=None` каналы делятся на четыре ветви: без фильтра, `3×3`, `1×15` и `15×1`. Необязательный `h_clamp` ограничивает начальное состояние, выровненную память и кандидат `f` для обновления памяти; ветвь выхода использует `f` до ограничения.
-- **Локальная обработка.** В `SMB` три свёртки `3×3`, между ними — `SiLU`. При неизменной ширине результат `u` управляет остаточной связью: `(u + x) ⊙ tanh(Conv1×1(u))`. При смене ширины блок возвращает `SiLU(u)` без этой связи.
-- **Свёртки для инференса.** По умолчанию `rep=True`: внутри `ConvNXC` обучаются цепочка `1×1 → k×k → 1×1` и параллельная ветвь `1×1`. Вызов `.eval()` объединяет их веса и смещения в одну `Conv2d`. При `rep=False` вместо `ConvNXC` используются `DOConv2d`, которые также подготавливают ядро при переходе в `.eval()`.
+- **Frame output and recurrent state are distinct.** Given input `x` and aligned state `a`, three `SMB` blocks compute `f = blocks(x + a)`. The output branch takes `f + x`, while the next step receives `a + z ⊙ (f − a)`, where `z = sigmoid(Conv1×1(cat(x, a)))`. At the first step in either direction there is no previous state: `f = blocks(x)` initializes the state directly.
+- **Alignment needs no explicit optical flow.** By default, a `7×7` depthwise convolution filters the previous state. With `align_kernel=None`, channels are split across an identity branch and three depthwise filters: `3×3`, `1×15`, and `15×1`. Optional `h_clamp` bounds the initial state, the aligned state, and the candidate `f` used for the state update. The output branch still uses the unclamped `f`.
+- **Gated spatial blocks.** An `SMB` applies three `3×3` convolutions with `SiLU` between them. When the channel count stays constant, the last convolution's output `u` gates the residual: `(u + x) ⊙ tanh(Conv1×1(u))`. When the width changes, the block returns `SiLU(u)` without a skip connection.
+- **Convolution fusion at inference.** With the default `rep=True`, each `ConvNXC` trains a `1×1 → k×k → 1×1` path alongside a `1×1` skip. Calling `.eval()` folds both paths into one `Conv2d`. With `rep=False`, `DOConv2d` replaces `ConvNXC` and also prepares its inference kernel on `.eval()`.
 
-Реализация: [`SMoVSR`, `FSMoSR` и `SMB`](smovsr_arch.py). Обе векторные схемы генерируются из корня репозитория одной командой, без PyTorch и графического редактора:
+See [`SMoVSR`, `FSMoSR`, and `SMB`](smovsr_arch.py) for the implementation. To regenerate both SVG figures from the repository root, run the following command. Only the Python standard library is required.
 
 ```sh
 python3 scripts/draw_architecture.py

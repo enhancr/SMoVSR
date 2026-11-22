@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="900" height="243" viewBox="0 0 900 243" role="img" aria-labelledby="title" font-family="DejaVu Sans, sans-serif">
-  <title id="title">FSMoSR · один шаг с историей</title>
+  <title id="title">FSMoSR · one recurrent step</title>
   <defs>
     <marker id="tip" viewBox="0 0 8 8" refX="8" refY="4" orient="auto" markerWidth="5" markerHeight="5">
       <path d="M0 0L8 4L0 8Z" fill="#5a6f7b" />
@@ -8,23 +8,23 @@
   <rect x="0" y="0" width="900" height="243" rx="12" fill="#fcfdfc" />
   <rect x="22" y="16" width="34" height="27" rx="5" fill="#182d3c" />
   <text x="39" y="35" fill="#ffffff" font-size="14" text-anchor="middle" font-weight="700">02</text>
-  <text x="69" y="36" fill="#182d3c" font-size="21" text-anchor="start" font-weight="700">FSMoSR · один шаг с историей</text>
-  <text x="878" y="34" fill="#495f6c" font-size="13" text-anchor="end" font-weight="400">ЯЧЕЙКА  /  ОБА НАПРАВЛЕНИЯ</text>
+  <text x="69" y="36" fill="#182d3c" font-size="21" text-anchor="start" font-weight="700">FSMoSR · one recurrent step</text>
+  <text x="878" y="34" fill="#495f6c" font-size="13" text-anchor="end" font-weight="400">CELL DETAIL  /  EITHER DIRECTION</text>
   <path d="M22 55H878" stroke="#cfdbde" />
   <text x="35" y="122" fill="#182d3c" font-size="15" text-anchor="middle" font-weight="700">x</text>
   <text x="37" y="204" fill="#182d3c" font-size="15" text-anchor="middle" font-weight="700">h</text>
   <rect x="72" y="173" width="143" height="50" rx="8" fill="#faebd2" stroke="#becdd0" />
-  <text x="143.5" y="196" fill="#182d3c" font-size="15" text-anchor="middle" font-weight="700">Выравнивание</text>
-  <text x="143.5" y="214" fill="#495f6c" font-size="13" text-anchor="middle" font-weight="400">поканально</text>
+  <text x="143.5" y="196" fill="#182d3c" font-size="15" text-anchor="middle" font-weight="700">Align state</text>
+  <text x="143.5" y="214" fill="#495f6c" font-size="13" text-anchor="middle" font-weight="400">depthwise filter</text>
   <circle cx="250" cy="117" r="13" fill="#fff" stroke="#5a6f7b" />
   <text x="250" y="123" fill="#182d3c" font-size="19" text-anchor="middle" font-weight="400">+</text>
   <rect x="292" y="92" width="118" height="50" rx="8" fill="#ddf2ed" stroke="#becdd0" />
-  <text x="351.0" y="115" fill="#182d3c" font-size="15" text-anchor="middle" font-weight="700">Признаки</text>
+  <text x="351.0" y="115" fill="#182d3c" font-size="15" text-anchor="middle" font-weight="700">Features</text>
   <text x="351.0" y="133" fill="#495f6c" font-size="13" text-anchor="middle" font-weight="400">SMB × 3</text>
   <circle cx="508" cy="117" r="13" fill="#fff" stroke="#5a6f7b" />
   <text x="508" y="123" fill="#182d3c" font-size="19" text-anchor="middle" font-weight="400">+</text>
   <rect x="552" y="92" width="168" height="50" rx="8" fill="#f0f4f6" stroke="#becdd0" />
-  <text x="636.0" y="115" fill="#182d3c" font-size="15" text-anchor="middle" font-weight="700">Выход шага</text>
+  <text x="636.0" y="115" fill="#182d3c" font-size="15" text-anchor="middle" font-weight="700">Step output</text>
   <text x="636.0" y="133" fill="#495f6c" font-size="13" text-anchor="middle" font-weight="400">SMB → Conv 3×3</text>
   <rect x="425" y="173" width="295" height="50" rx="8" fill="#faebd2" stroke="#becdd0" />
   <text x="572.5" y="196" fill="#182d3c" font-size="15" text-anchor="middle" font-weight="700">a + z ⊙ (f − a)</text>
@@ -44,7 +44,7 @@
   <text x="462" y="107" fill="#182d3c" font-size="15" text-anchor="middle" font-weight="700">f</text>
   <path d="M521 117H552" fill="none" stroke="#5a6f7b" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#tip)" />
   <path d="M720 117H753" fill="none" stroke="#5a6f7b" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#tip)" />
-  <text x="765" y="122" fill="#182d3c" font-size="15" text-anchor="start" font-weight="400">в SR-голову</text>
+  <text x="765" y="122" fill="#182d3c" font-size="15" text-anchor="start" font-weight="400">to SR head</text>
   <path d="M720 198H753" fill="none" stroke="#5a6f7b" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#tip)" />
-  <text x="765" y="203" fill="#182d3c" font-size="15" text-anchor="start" font-weight="400">новая память</text>
+  <text x="765" y="203" fill="#182d3c" font-size="15" text-anchor="start" font-weight="400">next state</text>
 </svg>

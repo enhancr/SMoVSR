@@ -55,13 +55,13 @@ class Plate:
 
 
 def overview():
-    p = Plate("01", "SMoVSR · два прохода по клипу", "ПРОСТРАНСТВО  /  ВРЕМЯ", 263)
-    p.box(22, 100, 100, "Клип", "T · RGB")
-    p.box(151, 100, 142, "Признаки", "SMB × 2")
-    p.box(335, 100, 157, "Прямой", "FSMoSR · 1 → T", TEAL)
-    p.box(335, 181, 157, "Слияние", "concat → 1×1")
-    p.box(539, 181, 182, "Обратный", "FSMoSR · T → 1", GOLD)
-    p.box(539, 100, 182, "Реконструкция", "concat → SR-голова")
+    p = Plate("01", "SMoVSR · bidirectional reconstruction", "CLIP OVERVIEW", 263)
+    p.box(22, 100, 100, "Input clip", "T · RGB")
+    p.box(151, 100, 142, "Frame features", "SMB × 2")
+    p.box(335, 100, 157, "Forward pass", "FSMoSR · 1 → T", TEAL)
+    p.box(335, 181, 157, "Fusion", "concat → 1×1")
+    p.box(539, 181, 182, "Backward pass", "FSMoSR · T → 1", GOLD)
+    p.box(539, 100, 182, "Reconstruction", "concat → SR head")
     p.arrow("M122 100H151")
     p.arrow("M293 100H335")
     p.arrow("M222 125V181H335")
@@ -74,19 +74,19 @@ def overview():
     p.arrow("M806 100H832")
     p.text(856, 105, "HR", bold=True)
     p.arrow("M72 125V237H793V113", dashed=True)
-    p.text(415, 231, "Билинейная база · ×s", 13, MUTED)
+    p.text(415, 231, "Bilinear upsampling · ×s", 13, MUTED)
     p.save("smovsr.svg")
 
 
 def cell():
-    p = Plate("02", "FSMoSR · один шаг с историей", "ЯЧЕЙКА  /  ОБА НАПРАВЛЕНИЯ", 243)
+    p = Plate("02", "FSMoSR · one recurrent step", "CELL DETAIL  /  EITHER DIRECTION", 243)
     p.text(35, 122, "x", bold=True)
     p.text(37, 204, "h", bold=True)
-    p.box(72, 198, 143, "Выравнивание", "поканально", GOLD)
+    p.box(72, 198, 143, "Align state", "depthwise filter", GOLD)
     p.plus(250, 117)
-    p.box(292, 117, 118, "Признаки", "SMB × 3", TEAL)
+    p.box(292, 117, 118, "Features", "SMB × 3", TEAL)
     p.plus(508, 117)
-    p.box(552, 117, 168, "Выход шага", "SMB → Conv 3×3")
+    p.box(552, 117, 168, "Step output", "SMB → Conv 3×3")
     p.box(425, 198, 295, "a + z ⊙ (f − a)", "z = sigmoid(Conv 1×1(cat(x, a)))", GOLD)
     p.arrow("M48 117H237")
     p.arrow("M115 117V78H508V104")
@@ -103,9 +103,9 @@ def cell():
     p.text(462, 107, "f", bold=True)
     p.arrow("M521 117H552")
     p.arrow("M720 117H753")
-    p.text(765, 122, "в SR-голову", anchor="start")
+    p.text(765, 122, "to SR head", anchor="start")
     p.arrow("M720 198H753")
-    p.text(765, 203, "новая память", anchor="start")
+    p.text(765, 203, "next state", anchor="start")
     p.save("fsmosr.svg")
 
 
